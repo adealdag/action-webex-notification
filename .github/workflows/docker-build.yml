@@ -1,0 +1,21 @@
+name: test
+
+on:
+  push:
+    branches:
+      - "master"
+
+jobs:
+  Send-Message:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Test Message
+        uses: adealdag/action-webex-notification@master
+        with:
+          webexToken: ${{ secrets.WEBEX_TOKEN }}
+          roomID: ${{ secrets.ROOM_ID }}
+          textMsg: "Hello Webex! Test message!"
+          markdownMsg: "Hello Webex! Test message!"
