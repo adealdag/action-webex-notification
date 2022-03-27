@@ -38,7 +38,8 @@ runs:
         -H 'Content-Type: application/json' 
         -H 'Authorization: Bearer ${{ inputs.webexToken }}' 
         -d "${API_BODY}" 
-        https://webexapis.com/v1/messages)
+        https://webexapis.com/v1/messages) 
+        && echo $API_RESPONSE
       shell: bash
     - id: process-api-response
       run: echo "::set-output name=msg-id::$(echo $API_RESPONSE | jq -r .id )"
