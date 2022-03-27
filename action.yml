@@ -33,7 +33,7 @@ runs:
       shell: bash
     - id: api-request
       run: >
-        API_RESPONSE=$(curl -s 
+        API_RESPONSE=$(curl -v -X POST 
         -H 'Content-Type: application/json' 
         -H 'Authorization: Bearer ${{ inputs.webexToken }}' 
         -d "${API_BODY}" 
