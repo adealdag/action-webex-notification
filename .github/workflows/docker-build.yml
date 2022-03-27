@@ -17,5 +17,5 @@ jobs:
         with:
           webexToken: ${{ secrets.WEBEX_TOKEN }}
           roomID: ${{ secrets.ROOM_ID }}
-          textMsg: "Hello Webex! Test message!"
-          markdownMsg: "Hello Webex! Test message!"
+          textMsg: "Hello Webex"
+          markdownMsg: "Hello Webex"
