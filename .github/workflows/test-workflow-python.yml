@@ -3,7 +3,7 @@ name: test
 on:
   push:
     branches:
-      - "master"
+      - "python"
 
 jobs:
   Send-Message:
@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Test Message
-        uses: adealdag/action-webex-notification@master
+        uses: adealdag/action-webex-notification@python
         with:
           webexToken: ${{ secrets.WEBEX_TOKEN }}
           roomID: ${{ secrets.ROOM_ID }}
