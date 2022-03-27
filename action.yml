@@ -20,4 +20,4 @@ outputs:
     description: "The unique identifier for the message."
 runs:
   using: "docker"
-  image: "Dockerfile"
+  image: "docker://adealdag/action-webex-notification:v1.0"
