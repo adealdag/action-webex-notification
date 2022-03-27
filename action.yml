@@ -25,9 +25,9 @@ runs:
     - id: build-body
       run: >
         API_BODY=$(jq --null-input
-        --arg roomid ${{ inputs.roomId }} 
-        --arg text ${{ inputs.textMsg }} 
-        --arg markdown ${{ inputs.markdownMsg }}
+        --arg roomid "${{ inputs.roomId }}" 
+        --arg text "${{ inputs.textMsg }}" 
+        --arg markdown "${{ inputs.markdownMsg }}"
         '{"roomId": $roomid, "text": $text, "markdown": $markdown}')
       shell: bash
     - id: api-request
