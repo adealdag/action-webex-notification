@@ -18,28 +18,6 @@ inputs:
 outputs:
   msgId:
     description: "The unique identifier for the message."
-    value: ${{ steps.process-api-response.outputs.msg-id }}
 runs:
-  using: "composite"
-  steps:
-    - id: build-body
-      run: >
-        API_BODY=$(jq --null-input
-        --arg roomid "${{ inputs.roomId }}" 
-        --arg text "${{ inputs.textMsg }}" 
-        --arg markdown "${{ inputs.markdownMsg }}"
-        '{"roomId": $roomid, "text": $text, "markdown": $markdown}') 
-        && echo $API_BODY
-      shell: bash
-    - id: api-request
-      run: >
-        API_RESPONSE=$(curl -v -X POST 
-        -H 'Content-Type: application/json' 
-        -H 'Authorization: Bearer ${{ inputs.webexToken }}' 
-        -d "${API_BODY}" 
-        https://webexapis.com/v1/messages) 
-        && echo $API_RESPONSE
-      shell: bash
-    - id: process-api-response
-      run: echo "::set-output name=msg-id::$(echo $API_RESPONSE | jq -r .id )"
-      shell: bash
+  using: "docker"
+  image: "Dockerfile"
