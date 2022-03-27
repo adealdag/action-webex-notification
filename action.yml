@@ -18,7 +18,7 @@ inputs:
 outputs:
   msgId:
     description: "The unique identifier for the message."
-    value: ${{}}
+    value: ${{ steps.process-api-response.outputs.msg-id }}
 runs:
   using: "composite"
   steps:
