@@ -1,0 +1,44 @@
+name: "Webex Notification"
+description: "Sends a Webex notification"
+inputs:
+  webexToken:
+    description: "Webex authentication token"
+    required: true
+  roomID:
+    description: "Webex Room ID where the message will be sent"
+    required: true
+  textMsg:
+    description: "The message, in plain text. If markdown is specified this parameter may be optionally used to provide alternate text for UI clients that do not support rich text. The maximum message length is 7439 bytes."
+    required: false
+    default: ""
+  markdownMsg:
+    description: "The message, in Markdown format. The maximum message length is 7439 bytes."
+    required: false
+    default: ""
+outputs:
+  msgId:
+    description: "The unique identifier for the message."
+    value: ${{}}
+runs:
+  using: "composite"
+  steps:
+    - id: build-body
+      run: >
+        API_BODY=$(jq --null-input
+        --arg roomid ${{ inputs.roomId }} 
+        --arg text ${{ inputs.textMsg }} 
+        --arg markdown ${{ inputs.markdownMsg }}
+        '{"roomId": $roomid, "text": $text, "markdown": $markdown}')
+      shell: bash
+    - id: api-request
+      run: >
+        API_RESPONSE=$(curl -s 
+        -H 'Accept: application/json' 
+        -H 'Content-Type: application/json' 
+        -H 'Authorization: Bearer ${{ inputs.webexToken }}' 
+        -d "${API_BODY}" \
+        https://webexapis.com/v1/messages)
+      shell: bash
+    - id: process-api-response
+      run: echo "::set-output name=msg-id::$(echo $API_RESPONSE | jq -r .id )"
+      shell: bash
